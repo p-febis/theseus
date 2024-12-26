@@ -18,6 +18,7 @@ if config["REFRESH_TOKEN"] == None:
 if config["API_URL"] == None:
     print("API_URL must be set in .env file.")
 
+# Change these values!
 CHANNEL_IDS = ["Q2hhbm5lbDoz"]
 WAREHOUSE_ID = "V2FyZWhvdXNlOjFlZjQzYmE3LTQyZjUtNDc5Yi1hNTUyLTNhODljMzRiN2Y1Zg=="
 DEFAULT_PRODUCT_TYPE = "UHJvZHVjdFR5cGU6Mg=="
