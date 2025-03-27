@@ -3,6 +3,9 @@ import json
 
 
 class BaseParser:
+    def __init__(self, first_line: str) -> None:
+        self.first_line = first_line
+
     def makeEdjsDescription(self, description: str) -> str:
         return json.dumps(
             {
