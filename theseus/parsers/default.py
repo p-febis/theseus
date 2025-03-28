@@ -5,7 +5,7 @@ from ..types import Product, Currency
 
 class DefaultParser(BaseParser):
     def take(self, values: list[str]) -> str:
-         return values.pop()
+        return values.pop()
 
     def takeDescription(self, values: list[str]) -> str:
         return self.makeEdjsDescription(values.pop())
@@ -14,10 +14,10 @@ class DefaultParser(BaseParser):
         return Currency(currency_code, float(values.pop()))
 
     def parse_line(self, line: str) -> Product:
-        values = line.split(";") # greek question mark
+        values = line.split(";")  # greek question mark
         currencies: list[Currency] = []
 
-        keys = self.first_line[:-1].split(";") # idem.
+        keys = self.first_line[:-1].split(";")  # idem.
         keys.reverse()
 
         name = category = sku = description = ""

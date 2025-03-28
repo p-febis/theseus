@@ -9,7 +9,7 @@ def makeParserFromName(name: str, first_line: str) -> DefaultParser:
     match name:
         case _:
             return DefaultParser(first_line)
-def makeUploaderFromName(name: str, first_line: str) -> DefaultUploader:
+def makeUploaderFromName(name: str) -> DefaultUploader:
     match name:
         case _:
             return DefaultUploader()
@@ -19,9 +19,12 @@ def makeUploaderFromName(name: str, first_line: str) -> DefaultUploader:
 @click.option("--importer", default="default", help="Available importers: default")
 @click.option("--uploader", default="default", help="Available uploaders: default")
 @click.argument("input", type=click.File("r"))
-def import_file(importer: str, input: io.TextIOWrapper):
+def import_file(importer: str, uploader: str,input: io.TextIOWrapper):
     parser = makeParserFromName(importer, input.readline())
     products = list(map(parser.parse_line, input.readlines()[1:]))
+
+    up = makeUploaderFromName(uploader)
+    up.bulk(products)
 
 
 if __name__ == "__main__":
