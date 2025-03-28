@@ -1,7 +1,6 @@
 import click
-from theseus.types.product import Currency
 from .base import BaseParser
-from ..types import Product
+from ..types import Product, Currency
 
 
 class DefaultParser(BaseParser):
