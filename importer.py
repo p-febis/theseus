@@ -16,7 +16,7 @@ def makeParserFromName(name: str, first_line: str) -> DefaultParser:
 def import_file(importer: str, input: io.TextIOWrapper):
     parser = makeParserFromName(importer, input.readline())
 
-    products = list(map(parser.parse_line, input.readlines()[1:4]))
+    products = list(map(parser.parse_line, input.readlines()[1:]))
 
     click.echo(products)
 
