@@ -10,6 +10,7 @@ class Currency:
 @dataclass
 class Product:
     name: str
+    type_: str
     sku: str
     category: str
     currencies: list[Currency]

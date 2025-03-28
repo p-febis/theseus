@@ -1,0 +1,11 @@
+credentials:
+  saleor_url: http://localhost:8000/graphql/
+  app_token: XXXX
+
+# map a currency to a channel id:
+currencies:
+  USD: <USD Channel ID>
+  EUR: <EUR Channel ID>
+
+uploader:
+  warehouse_id: <warehouse_id>

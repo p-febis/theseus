@@ -20,13 +20,16 @@ class DefaultParser(BaseParser):
         keys = self.first_line[:-1].split(";")  # idem.
         keys.reverse()
 
-        name = category = sku = description = ""
+        name = type_ = category = sku = description = ""
         quantity = 0
 
         for key in keys:
             match key:
                 case "Name":
                     name = self.take(values)
+                    continue
+                case "Item Type":
+                    type_ = self.take(values)
                     continue
                 case "Category":
                     category = self.take(values)
@@ -49,4 +52,4 @@ class DefaultParser(BaseParser):
             click.echo(f"Unkonwn key: {key}", err=True)
             values.pop()
 
-        return Product(name, sku, category, currencies, quantity, description)
+        return Product(name, type_, sku, category, currencies, quantity, description)
