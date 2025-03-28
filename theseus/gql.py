@@ -26,7 +26,7 @@ class GqlCommands:
 
     def createCategoryQuery(
         self, category_input: dict[str, str], parent_id: Optional[str] = None
-    ) -> Optional[int]:
+    ) -> Optional[str]:
         variable_values: dict[str, dict | str] = {
             "input": category_input,
         }
