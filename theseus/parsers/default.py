@@ -25,12 +25,6 @@ class DefaultParser(BaseParser):
         quantity = 0
 
         for key in keys:
-
-            if key.startswith("Price"):
-                [_, currency_code] = key.split(" ")
-                self.takeCurrency(currency_code, values)
-                continue
-
             match key:
                 case "Name":
                     name = self.take(values)
@@ -47,8 +41,13 @@ class DefaultParser(BaseParser):
                 case "Description":
                     description = self.takeDescription(values)
                     continue
-                case _:
-                    click.echo(f"Unkonwn key: {key}", err=True)
-                    values.pop()
+
+            if key.startswith("Price"):
+                [_, currency_code] = key.split(" ")
+                self.takeCurrency(currency_code, values)
+                continue
+
+            click.echo(f"Unkonwn key: {key}", err=True)
+            values.pop()
 
         return Product(name, sku, category, currencies, quantity, description)
