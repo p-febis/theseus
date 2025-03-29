@@ -9,3 +9,4 @@ currencies:
 
 uploader:
   warehouse_id: <warehouse_id>
+  chunk_size: 25

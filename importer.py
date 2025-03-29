@@ -14,27 +14,24 @@ def makeParserFromName(name: str, first_line: str) -> DefaultParser:
             return DefaultParser(first_line)
 def makeUploaderFromName(name: str) -> DefaultUploader:
     
-    app_token: Optional[str] = None
-    saleor_url: Optional[str] = None
-
     with open("config.yml", 'r') as config:
         data = yaml.safe_load(config)
     
         app_token = data["credentials"]["app_token"]
         saleor_url = data["credentials"]["saleor_url"]
 
-    if saleor_url is None:
-        click.echo("saleor_url not set!")
-        exit(-1)
-    if app_token is None:
-        click.echo("app_token not set!")
-        exit(-1)
+        if saleor_url is None:
+            click.echo("saleor_url not set!")
+            exit(-1)
+        if app_token is None:
+            click.echo("app_token not set!")
+            exit(-1)
 
-    gql_commands = GqlCommands(saleor_url, app_token)
+    gql_commands = GqlCommands(data["credentials"]["saleor_url"], data["credentials"]["app_token"])
 
     match name:
         case _:
-            return DefaultUploader(gql_commands, data["currencies"], data["uploader"]["warehouse_id"])
+            return DefaultUploader(gql_commands, data["currencies"], data["uploader"]["warehouse_id"], data["uploader"]["chunk_size"])
 
 
 @click.command()

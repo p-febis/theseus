@@ -8,7 +8,7 @@ from ..types import Product
 
 class DefaultUploader(BaseUploader):
     def __init__(
-        self, gql_commands: GqlCommands, currency_map: dict[str, str], warehouse_id: str
+            self, gql_commands: GqlCommands, currency_map: dict[str, str], warehouse_id: str, chunks_size: int
     ):
         super().__init__(gql_commands)
         # TODO: Introspection
@@ -17,6 +17,7 @@ class DefaultUploader(BaseUploader):
 
         self.currency_map = currency_map
         self.warehouse_id = warehouse_id
+        self.chunks_size = chunks_size
 
     def makeCategory(self, category: str, parent_id: Optional[str]) -> Optional[str]:
         if category in self.categories:
@@ -51,6 +52,11 @@ class DefaultUploader(BaseUploader):
             product_type_id = self.makeProductType(product_type)
             if product_type_id:
                 self.product_types[product_type] = product_type_id
+
+    def chunks(self, list_: list[Any], n: int):
+        for i in range(0, len(list_), n):
+            yield list_[i:i + n]
+
 
     def productToBulkCreateInfo(
         self, product: Product
@@ -108,4 +114,10 @@ class DefaultUploader(BaseUploader):
         self.makeProductTypes(product_types)
         click.echo("Created product types")
 
-        self.bulkUploadProducts(products)
+        done = 0
+
+        for chunk in self.chunks(products, self.chunks_size):
+            self.bulkUploadProducts(chunk)
+
+            done += len(chunk)
+            click.echo(f"Finished {done} products")
