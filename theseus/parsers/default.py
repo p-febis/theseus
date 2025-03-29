@@ -46,7 +46,7 @@ class DefaultParser(BaseParser):
 
             if key.startswith("Price"):
                 [_, currency_code] = key.split(" ")
-                self.takeCurrency(currency_code, values)
+                currencies.append(self.takeCurrency(currency_code, values))
                 continue
 
             click.echo(f"Unkonwn key: {key}", err=True)

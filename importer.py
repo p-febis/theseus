@@ -34,7 +34,7 @@ def makeUploaderFromName(name: str) -> DefaultUploader:
 
     match name:
         case _:
-            return DefaultUploader(gql_commands)
+            return DefaultUploader(gql_commands, data["currencies"], data["uploader"]["warehouse_id"])
 
 
 @click.command()
