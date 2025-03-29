@@ -33,6 +33,7 @@ uploader:
   chunk_size: 25
 ```
 
+## Running
 
 ```sh
 python3 importer.py trunc.csv
