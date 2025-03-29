@@ -1,5 +1,4 @@
 # Theseus
----
 
 Theseus is a streamlined tool for importing and uploading product data into a Saleor instance via GraphQL. It provides flexible parsing and bulk uploading capabilities using configurable importers and uploaders.
 
