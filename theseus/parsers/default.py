@@ -13,17 +13,13 @@ class DefaultParser(BaseParser):
     def takeCurrency(self, currency_code: str, values: list[str]) -> Currency:
         return Currency(currency_code, float(values.pop()))
 
-    def parse_line(self, line: str) -> Product:
-        values = line.split(";")  # greek question mark
+    def parse_line(self, values: list[str]) -> Product:
         currencies: list[Currency] = []
-
-        keys = self.first_line[:-1].split(";")  # idem.
-        keys.reverse()
 
         name = type_ = category = sku = description = ""
         quantity = 0
 
-        for key in keys:
+        for key in self.reversed_keys:
             match key:
                 case "Name":
                     name = self.take(values)

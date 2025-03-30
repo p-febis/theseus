@@ -3,3 +3,4 @@ venv
 .ruff_cache
 __pycache__
 config.yml
+products.csv

@@ -1,5 +1,6 @@
 from typing import Optional
 import click
+import csv
 import yaml
 import io
 
@@ -8,10 +9,10 @@ from theseus.parsers.default import DefaultParser
 from theseus.uploader.default import DefaultUploader
 
 
-def makeParserFromName(name: str, first_line: str) -> DefaultParser:
+def makeParserFromName(name: str, keys: list[str]) -> DefaultParser:
     match name:
         case _:
-            return DefaultParser(first_line)
+            return DefaultParser(keys)
 def makeUploaderFromName(name: str) -> DefaultUploader:
     
     with open("config.yml", 'r') as config:
@@ -39,8 +40,9 @@ def makeUploaderFromName(name: str) -> DefaultUploader:
 @click.option("--uploader", default="default", help="Available uploaders: default")
 @click.argument("input", type=click.File("r"))
 def import_file(importer: str, uploader: str,input: io.TextIOWrapper):
-    parser = makeParserFromName(importer, input.readline())
-    products = list(map(parser.parse_line, input.readlines()[1:]))
+    csv_parsed = list(csv.reader(input.readlines()))
+    parser = makeParserFromName(importer, csv_parsed[0])
+    products = list(map(parser.parse_line, csv_parsed[1:]))
 
     up = makeUploaderFromName(uploader)
     up.bulk(products)

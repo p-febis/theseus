@@ -3,8 +3,9 @@ import json
 
 
 class BaseParser:
-    def __init__(self, first_line: str) -> None:
-        self.first_line = first_line
+    def __init__(self, keys: list[str]) -> None:
+        self.reversed_keys = keys
+        self.reversed_keys.reverse()
 
     def makeEdjsDescription(self, description: str) -> str:
         return json.dumps(
@@ -21,5 +22,5 @@ class BaseParser:
             }
         )
 
-    def parse_line(self, line: str) -> Product:
+    def parse_line(self, values: list[str]) -> Product:
         raise Exception("Base class should never be called")
