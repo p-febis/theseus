@@ -60,7 +60,7 @@ class DefaultUploader(BaseUploader):
         self, product: Product
     ) -> dict[str, str | list[dict[str, Any]]]:  # TODO: Strenghten typing
         return {
-            "category": self.categories[product.category],
+            "category": self.categories[product.category.split('/')[-1]],
             "description": product.description,
             "name": product.name,
             "productType": self.product_types[product.type_],
