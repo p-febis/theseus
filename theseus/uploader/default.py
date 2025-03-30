@@ -70,6 +70,7 @@ class DefaultUploader(BaseUploader):
                         "channelId": self.currency_map[currency.code],
                         "isPublished": True,
                         "isAvailableForPurchase": True,
+                        "visibleInListings": True,
                     },
                     product.currencies,
                 )
