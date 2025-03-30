@@ -1,6 +1,5 @@
 from typing import Any, Optional
 import click
-from slugify import slugify
 from theseus.gql import GqlCommands
 from .base import BaseUploader
 from ..types import Product
@@ -8,7 +7,11 @@ from ..types import Product
 
 class DefaultUploader(BaseUploader):
     def __init__(
-            self, gql_commands: GqlCommands, currency_map: dict[str, str], warehouse_id: str, chunks_size: int
+        self,
+        gql_commands: GqlCommands,
+        currency_map: dict[str, str],
+        warehouse_id: str,
+        chunks_size: int,
     ):
         super().__init__(gql_commands)
         # TODO: Introspection
@@ -23,9 +26,7 @@ class DefaultUploader(BaseUploader):
         if category in self.categories:
             return self.categories[category]
 
-        return self.gql.createCategoryMutation(
-            {"name": category, "slug": slugify(category)}, parent_id
-        )
+        return self.gql.createCategoryMutation({"name": category}, parent_id)
 
     def makeCategories(self, categories: list[str]) -> None:
         for category_path in categories:
@@ -43,9 +44,7 @@ class DefaultUploader(BaseUploader):
         if product_type in self.product_types:
             return self.product_types[product_type]
 
-        return self.gql.createProductTypeMutation(
-            {"name": product_type, "slug": slugify(product_type)}
-        )
+        return self.gql.createProductTypeMutation({"name": product_type})
 
     def makeProductTypes(self, product_types: list[str]) -> None:
         for product_type in product_types:
@@ -55,12 +54,11 @@ class DefaultUploader(BaseUploader):
 
     def chunks(self, list_: list[Any], n: int):
         for i in range(0, len(list_), n):
-            yield list_[i:i + n]
-
+            yield list_[i : i + n]
 
     def productToBulkCreateInfo(
         self, product: Product
-        ) -> dict[str, str | list[dict[str, Any]]]:  # TODO: Strenghten typing
+    ) -> dict[str, str | list[dict[str, Any]]]:  # TODO: Strenghten typing
         return {
             "category": self.categories[product.category],
             "description": product.description,

@@ -12,7 +12,7 @@ Theseus is a streamlined tool for importing and uploading product data into a Sa
 Theseus requires Python 3 (Developed on 3.11) and `pip`. Install dependencies using:
 
 ```sh
-pip install click "gql[all]"
+pip install click pyyaml "gql[all]"
 ```
 
 ## Configuration
