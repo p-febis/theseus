@@ -69,6 +69,7 @@ class DefaultUploader(BaseUploader):
                     lambda currency: {
                         "channelId": self.currency_map[currency.code],
                         "isPublished": True,
+                        "isAvailableForPurchase": True,
                     },
                     product.currencies,
                 )
