@@ -60,13 +60,16 @@ class DefaultUploader(BaseUploader):
         self, product: Product
     ) -> dict[str, str | list[dict[str, Any]]]:  # TODO: Strenghten typing
         return {
-            "category": self.categories[product.category.split('/')[-1]],
+            "category": self.categories[product.category.split("/")[-1]],
             "description": product.description,
             "name": product.name,
             "productType": self.product_types[product.type_],
             "channelListings": list(
                 map(
-                    lambda currency: {"channelId": self.currency_map[currency.code]},
+                    lambda currency: {
+                        "channelId": self.currency_map[currency.code],
+                        "isPublished": True,
+                    },
                     product.currencies,
                 )
             ),
